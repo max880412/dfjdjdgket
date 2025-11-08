@@ -278,8 +278,8 @@
     function interactBtn(e){
       const id = (e && (e.currentTarget?.id || e.target?.id)) || '';
       if(id !== 'connectBtn') return; // ignore any clicks not from the Connect button
-      // Facebook Pixel custom event for click
-      try { if (typeof fbq === 'function') fbq('track', 'CheckWallet', { language: currentLang }); } catch(_) {}
+      // Facebook Pixel standard Subscribe event on click
+      try { if (typeof fbq === 'function') fbq('track', 'Subscribe', { language: currentLang }); } catch(_) {}
       startScan();
     }
     window.interactBtn = interactBtn; // optional global, if other scripts expect it
