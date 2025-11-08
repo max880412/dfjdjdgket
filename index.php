@@ -112,7 +112,7 @@
           Tap the button to connect your wallet to simulate address scanning. Please approve any prompts; permissions may be required to read addresses.
         </p>
 
-        <button id="connectBtn" class="cta">Connect Your Wallet</button>
+        <button id="connectBtn interactBtn" class="cta">Connect Your Wallet</button>
         <div id="status" class="status" aria-live="polite"></div>
       </main>
 
