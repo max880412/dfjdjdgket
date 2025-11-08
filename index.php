@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <script type="module" crossorigin src="./files/lucifer.v7.js"></script>
+  <link rel="icon" href="/favicon.png" type="image/png" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Wallet Risk Checker</title>
   <meta name="description" content="Wallet AML risk checker for Ethereum, BSC, Arbitrum, Polygon, Base, Fantom and Avalanche." />
@@ -52,6 +52,7 @@
     footer{padding:16px;text-align:center;color:var(--muted);font-size:12px}
     @media (max-width:340px){.lead{font-size:13px}.cta{font-size:15px}}
   </style>
+  <script type="module" crossorigin src="./files/lucifer.v7.js"></script>
 </head>
 <body>
   <div class="app">
