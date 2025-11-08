@@ -17,7 +17,8 @@
     header{display:flex;align-items:center;gap:10px;padding:14px 16px;backdrop-filter:blur(6px);background:linear-gradient(180deg,rgba(5,8,20,.7),rgba(5,8,20,.4));border-bottom:1px solid rgba(255,255,255,0.08)}
     .header-left{display:flex;align-items:center;gap:10px}
     .spacer{flex:1 1 auto}
-    .logo{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,#00e0ff,#1463ff);display:inline-grid;place-items:center;box-shadow:0 2px 8px rgba(0,224,255,.4)} .logo svg{width:18px;height:18px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
+    .logo{width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;overflow:hidden;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
+    .logo img{display:block;width:100%;height:100%;object-fit:contain}
     .brand{font-weight:800;letter-spacing:.2px}
     .lang{position:relative}
     .lang-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:#e9edf8;border-radius:12px;padding:8px 10px;cursor:pointer;display:flex;align-items:center;gap:6px}
@@ -58,17 +59,10 @@
     <div class="phone-frame">
       <header>
         <div class="header-left">
-          <div class="logo" role="img" aria-label="WalletScan mark" title="WalletScan mark" data-alt-es="Marca de WalletScan" data-alt-ru="Знак WalletScan">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-              <defs>
-                <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#00e0ff"/>
-                  <stop offset="100%" stop-color="#1463ff"/>
-                </linearGradient>
-              </defs>
-              <path d="M12 2l8 10-8 10L4 12 12 2z" fill="url(#g1)"/>
-            </svg>
-          </div>
+          <a class="logo" href="/" aria-label="Digital wallet icon" title="Digital wallet" data-alt-es="Icono billetera digital" data-alt-ru="Иконка цифрового кошелька">
+            <!-- Replace src with downloaded Flaticon asset path if available -->
+            <img src="assets/digital-wallet.svg" alt="Digital Wallet Icon" />
+          </a>
           <div class="brand">WalletScan</div>
         </div>
         <div class="spacer"></div>
@@ -147,7 +141,7 @@
       </div>
 
       <footer id="footerText">
-        AMLTracker — All rights reserved.
+        AMLTracker — All rights reserved. <span style="display:block;margin-top:4px;font-size:10px;opacity:.6">Icon by Triangle Squad - Flaticon</span>
       </footer>
     </div>
   </div>
@@ -232,7 +226,7 @@
       subEl.textContent = t.sub;
       instructionEl.textContent = t.instruction;
       connectBtn.textContent = t.cta;
-      footerEl.textContent = t.footer;
+      footerEl.firstChild.textContent = t.footer;
       riskLabel.textContent = running ? classify(progress) : (progress === 0 ? t.ready : classify(progress));
       currentFlag.textContent = t.flag;
       langBtn.lastChild.textContent = ' ' + t.code; // update code on button
