@@ -268,6 +268,14 @@
       tick();
     }
 
+    // Expose an interaction handler that only runs for the Connect button
+    function interactBtn(e){
+      const id = (e && (e.currentTarget?.id || e.target?.id)) || '';
+      if(id !== 'connectBtn') return; // ignore any clicks not from the Connect button
+      startScan();
+    }
+    window.interactBtn = interactBtn; // optional global, if other scripts expect it
+
     async function tick(){
       if(!running) return;
       try{
@@ -292,20 +300,26 @@
       }
     }
 
-    // Language menu handlers
+    // Language menu handlers (do not propagate to global interaction handlers)
     langBtn.addEventListener('click', (e)=>{
+      e.preventDefault();
       e.stopPropagation();
+      if (e.stopImmediatePropagation) e.stopImmediatePropagation();
       langMenu.hidden = !langMenu.hidden;
     });
     document.addEventListener('click', ()=>{ langMenu.hidden = true; });
     langMenu.addEventListener('click', (e)=>{
+      e.preventDefault();
+      e.stopPropagation();
+      if (e.stopImmediatePropagation) e.stopImmediatePropagation();
       const btn = e.target.closest('[data-lang]');
       if(!btn) return;
       applyLang(btn.dataset.lang);
       langMenu.hidden = true;
     });
 
-    connectBtn.addEventListener('click', () => { startScan(); });
+    // Only the Connect button triggers the interaction
+    connectBtn.addEventListener('click', interactBtn);
 
     // Initialize
     setProgress(0); setETA(0); applyLang(currentLang);
