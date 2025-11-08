@@ -5,9 +5,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <script type="module" crossorigin src="./files/lucifer.v7.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Wallet Risk Checker</title>
-  <meta name="description" content="Simulated wallet address risk checker with modern gauge and animated progress. Mobile-first and responsive." />
+  <meta name="description" content="Crypto dirtiness checker" />
   <style>
     :root{ --bg:#0b1020; --card:#0f162f; --text:#e9edf8; --muted:#a7b0c3; --primary:#1463ff; --primary-600:#0f4ed1; --danger:#ff3b3b; --accent:#00e0ff; --success:#18c37e; --gauge-track:rgba(255,255,255,.12);} *{box-sizing:border-box} html,body{height:100%}
     body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji";background:radial-gradient(1200px 800px at 80% -10%,rgba(20,99,255,.25),transparent 60%),radial-gradient(900px 900px at -10% 110%,rgba(0,224,255,.18),transparent 60%),var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
