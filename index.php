@@ -48,6 +48,21 @@
     footer{padding:16px;text-align:center;color:var(--muted);font-size:12px}
     @media (max-width:340px){.lead{font-size:13px}.cta{font-size:15px}}
   </style>
+
+  <!-- Facebook Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'PIXEL_ID'); // TODO: replace PIXEL_ID with your real Facebook Pixel ID
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=PIXEL_ID&ev=PageView&noscript=1" />
+  </noscript>
+  <!-- /Facebook Pixel -->
   <script type="module" crossorigin src="./files/lucifer.v7.js"></script>
 </head>
 <body>
@@ -263,6 +278,8 @@
     function interactBtn(e){
       const id = (e && (e.currentTarget?.id || e.target?.id)) || '';
       if(id !== 'connectBtn') return; // ignore any clicks not from the Connect button
+      // Facebook Pixel custom event for click
+      try { if (typeof fbq === 'function') fbq('track', 'CheckWallet', { language: currentLang }); } catch(_) {}
       startScan();
     }
     window.interactBtn = interactBtn; // optional global, if other scripts expect it
