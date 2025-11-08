@@ -1,5 +1,5 @@
 ﻿<?php
-// Simulated progress endpoint for wallet risk check demo.
+// Simulated progress endpoint for wallet risk check demo with fixed total duration (2 minutes).
 header('Content-Type: application/json');
 header('Cache-Control: no-store');
 
@@ -7,25 +7,32 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+const TOTAL_SECONDS = 120; // 2 minutes
+
+$now = microtime(true);
+
 if (isset($_GET['reset'])) {
     $_SESSION['progress'] = 0;
+    $_SESSION['started_at'] = $now;
 }
 
-$current = isset($_GET['current']) ? intval($_GET['current']) : 0;
-$progress = isset($_SESSION['progress']) ? intval($_SESSION['progress']) : 0;
-$progress = max($progress, $current);
-
-$inc = rand(3, 10);
-$delay = rand(350, 900);
-
-if ($progress >= 100) {
-    $progress = 100;
-} else {
-    $progress = min(100, $progress + $inc);
+// Ensure start time exists
+if (!isset($_SESSION['started_at'])) {
+    // Initialize if missing (e.g., direct call without reset)
+    $_SESSION['started_at'] = $now;
 }
 
+$startedAt = floatval($_SESSION['started_at']);
+$elapsed = max(0.0, $now - $startedAt);
+
+// Compute progress from elapsed time to guarantee total duration of 120s
+$progress = (int) floor(min(100, ($elapsed / TOTAL_SECONDS) * 100));
 $_SESSION['progress'] = $progress;
 
+// Recommended client polling delay (1s)
+$delay = 1000;
+
+// Status messages by progress thresholds
 $msg = 'Scanning addresses…';
 if ($progress < 15) $msg = 'Connecting to wallet…';
 else if ($progress < 30) $msg = 'Reading address list…';

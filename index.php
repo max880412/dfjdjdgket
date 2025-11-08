@@ -9,107 +9,38 @@
   <title>Wallet Risk Checker</title>
   <meta name="description" content="Simulated wallet address risk checker with modern gauge and animated progress. Mobile-first and responsive." />
   <style>
-    :root{
-      --bg: #0b1020;
-      --card: #0f162f;
-      --text: #e9edf8;
-      --muted: #a7b0c3;
-      --primary: #1463ff;
-      --primary-600: #0f4ed1;
-      --danger: #ff3b3b;
-      --accent: #00e0ff;
-      --success: #18c37e;
-      --gauge-track: rgba(255,255,255,.12);
+    :root{ --bg:#0b1020; --card:#0f162f; --text:#e9edf8; --muted:#a7b0c3; --primary:#1463ff; --primary-600:#0f4ed1; --danger:#ff3b3b; --accent:#00e0ff; --success:#18c37e; --gauge-track:rgba(255,255,255,.12);} *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji";background:radial-gradient(1200px 800px at 80% -10%,rgba(20,99,255,.25),transparent 60%),radial-gradient(900px 900px at -10% 110%,rgba(0,224,255,.18),transparent 60%),var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    .app{min-height:100%;display:flex;align-items:center;justify-content:center;padding:20px}
+    .phone-frame{width:min(420px,100%);background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03));border:1px solid rgba(255,255,255,0.12);box-shadow:0 10px 40px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.06);border-radius:22px;overflow:clip;position:relative}
+    header{display:flex;align-items:center;gap:10px;padding:14px 16px;backdrop-filter:blur(6px);background:linear-gradient(180deg,rgba(5,8,20,.7),rgba(5,8,20,.4));border-bottom:1px solid rgba(255,255,255,0.08)}
+    .logo{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,#00e0ff,#1463ff);display:inline-grid;place-items:center;box-shadow:0 2px 8px rgba(0,224,255,.4)} .logo svg{width:18px;height:18px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-      background: radial-gradient(1200px 800px at 80% -10%, rgba(20,99,255,0.25), transparent 60%),
-                  radial-gradient(900px 900px at -10% 110%, rgba(0,224,255,0.18), transparent 60%),
-                  var(--bg);
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-    .app{ min-height:100%; display:flex; align-items:center; justify-content:center; padding: 20px; }
-    .phone-frame{
-      width:min(420px, 100%);
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: 0 10px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
-      border-radius: 22px;
-      overflow: clip;
-      position:relative;
-    }
-    header{
-      display:flex; align-items:center; gap:10px; padding: 14px 16px; backdrop-filter: blur(6px);
-      background: linear-gradient(180deg, rgba(5,8,20,.7), rgba(5,8,20,.4));
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    .logo{ width:26px; height:26px; border-radius:8px; background: linear-gradient(135deg, #00e0ff, #1463ff); display:inline-grid; place-items:center; box-shadow: 0 2px 8px rgba(0,224,255,.4); }
-    .logo svg{ width:18px; height:18px; filter: drop-shadow(0 2px 4px rgba(0,0,0,.4)); }
-    .brand{ font-weight:800; letter-spacing:.2px; }
-
-    main{ padding: 22px 18px 24px; text-align:center; }
-    h1{ font-size: clamp(28px, 7vw, 36px); line-height:1.1; margin: 6px 0 10px; letter-spacing: .2px; }
-    .sub{ color: var(--muted); font-size: 14px; margin: 10px auto 2px; max-width: 34ch; }
-
-    .hero{
-      position:relative; margin: 10px auto 16px; padding: 18px 12px 6px; border-radius: 18px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    /* Gauge */
-    .gauge-wrap{ position:relative; width: 82%; max-width: 320px; margin: 6px auto 8px; aspect-ratio: 1/1; }
-    .gauge{ position:absolute; inset:0; display:grid; place-items:center; }
-    .gauge svg{ width:100%; height:100%; overflow:visible; }
-    .gauge .center{ position:absolute; display:grid; place-items:center; text-align:center; }
-    .bolt{ color: var(--danger); font-size: 18px; }
-    .percent{ font-weight:800; font-size: clamp(34px, 8vw, 44px); letter-spacing:.5px; }
-    .risk-label{ font-size: 13px; color: var(--muted); margin-top:2px; }
-
-    /* Timeline / progress */
-    .timeline{ margin: 12px auto 4px; width: 88%; max-width: 360px; }
-    .bar{ position:relative; height: 10px; border-radius: 999px; background: rgba(255,255,255,.08); overflow:hidden; }
-    .bar::before{ content:""; position:absolute; inset:0; width: 30%; background: linear-gradient(90deg, transparent, rgba(20,99,255,.85), transparent);
-      filter: blur(6px); animation: sweep 1.6s linear infinite; }
-    .bar .fill{ position:absolute; top:0; left:0; height:100%; width:0%; background: linear-gradient(90deg, #18c37e, #00e0ff); box-shadow: 0 0 16px rgba(0,224,255,.45);
-      transition: width .3s ease; }
-    @keyframes sweep{ from{ left:-30% } to{ left:100% } }
-
-    .eta{ display:flex; align-items:center; justify-content:center; gap:8px; font-size:12px; color: var(--muted); margin-top:6px; }
-    .dot{ width:6px; height:6px; border-radius:50%; background: var(--accent); box-shadow: 0 0 10px var(--accent), 0 0 20px rgba(0,224,255,.5); animation: pulse 1.2s ease-in-out infinite; }
-    @keyframes pulse{ 0%{ transform:scale(.85); opacity:.75 } 50%{ transform:scale(1.1); opacity:1 } 100%{ transform:scale(.85); opacity:.75 } }
-
-    .lead{ color: var(--muted); font-size: 14px; margin: 12px auto 16px; max-width: 36ch; }
-
-    .cta{
-      appearance:none; border:none; width: 92%; max-width: 380px; display:block; margin: 12px auto 0; cursor:pointer;
-      background: linear-gradient(180deg, var(--primary), var(--primary-600)); color:#fff; font-weight:700; font-size:16px; padding: 14px 18px; border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(20,99,255,.45), inset 0 1px 0 rgba(255,255,255,.25);
-      transition: transform .08s ease, filter .2s ease, opacity .2s ease;
-    }
-    .cta:active{ transform: translateY(1px) scale(.99); }
-    .cta[disabled]{ opacity:.6; cursor:not-allowed; }
-
-    .status{ font-size: 13px; color: var(--muted); margin: 10px auto 8px; min-height: 18px; }
-
-    /* Glassy floating nodes for ambiance */
-    .nodes{ position:absolute; inset:0; pointer-events:none; overflow:hidden; opacity:.55; }
-    .node{ position:absolute; width: 42px; height: 42px; border-radius: 14px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04);
-      backdrop-filter: blur(4px); animation: float 12s ease-in-out infinite; }
-    .node:nth-child(1){ top:12%; left:8%; animation-duration: 10s }
-    .node:nth-child(2){ top:18%; right:12%; animation-duration: 13s }
-    .node:nth-child(3){ bottom:18%; left:16%; animation-duration: 14s }
-    .node:nth-child(4){ bottom:12%; right:10%; animation-duration: 11s }
-    @keyframes float{ 0%{ transform: translateY(0) translateX(0) } 50%{ transform: translateY(-6px) translateX(6px) } 100%{ transform: translateY(0) translateX(0) } }
-
-    footer{ padding: 16px; text-align:center; color: var(--muted); font-size: 12px; }
-
-    /* Small screens fine-tune */
-    @media (max-width:340px){ .lead{ font-size: 13px } .cta{ font-size: 15px } }
+    .brand{font-weight:800;letter-spacing:.2px}
+    main{padding:22px 18px 24px;text-align:center}
+    h1{font-size:clamp(28px,7vw,36px);line-height:1.1;margin:6px 0 10px;letter-spacing:.2px}
+    .sub{color:var(--muted);font-size:14px;margin:10px auto 2px;max-width:34ch}
+    .hero{position:relative;margin:10px auto 16px;padding:18px 12px 6px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.1)}
+    .gauge-wrap{position:relative;width:82%;max-width:320px;margin:6px auto 8px;aspect-ratio:1/1}
+    .gauge{position:absolute;inset:0;display:grid;place-items:center} .gauge svg{width:100%;height:100%;overflow:visible} .gauge .center{position:absolute;display:grid;place-items:center;text-align:center}
+    .bolt{color:var(--danger);font-size:18px} .percent{font-weight:800;font-size:clamp(34px,8vw,44px);letter-spacing:.5px} .risk-label{font-size:13px;color:var(--muted);margin-top:2px}
+    .timeline{margin:12px auto 4px;width:88%;max-width:360px} .bar{position:relative;height:10px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
+    .bar::before{content:"";position:absolute;inset:0;width:30%;background:linear-gradient(90deg,transparent,rgba(20,99,255,.85),transparent);filter:blur(6px);animation:sweep 1.6s linear infinite}
+    .bar .fill{position:absolute;top:0;left:0;height:100%;width:0%;background:linear-gradient(90deg,#18c37e,#00e0ff);box-shadow:0 0 16px rgba(0,224,255,.45);transition:width .3s ease}
+    @keyframes sweep{from{left:-30%}to{left:100%}}
+    .eta{display:flex;align-items:center;justify-content:center;gap:8px;font-size:12px;color:var(--muted);margin-top:6px}
+    .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent),0 0 20px rgba(0,224,255,.5);animation:pulse 1.2s ease-in-out infinite}
+    @keyframes pulse{0%{transform:scale(.85);opacity:.75}50%{transform:scale(1.1);opacity:1}100%{transform:scale(.85);opacity:.75}}
+    .lead{color:var(--muted);font-size:14px;margin:12px auto 16px;max-width:36ch}
+    .cta{appearance:none;border:none;width:92%;max-width:380px;display:block;margin:12px auto 0;cursor:pointer;background:linear-gradient(180deg,var(--primary),var(--primary-600));color:#fff;font-weight:700;font-size:16px;padding:14px 18px;border-radius:16px;box-shadow:0 8px 20px rgba(20,99,255,.45),inset 0 1px 0 rgba(255,255,255,.25);transition:transform .08s ease,filter .2s ease,opacity .2s ease}
+    .cta:active{transform:translateY(1px) scale(.99)} .cta[disabled]{opacity:.6;cursor:not-allowed}
+    .status{font-size:13px;color:var(--muted);margin:10px auto 8px;min-height:18px}
+    .nodes{position:absolute;inset:0;pointer-events:none;overflow:hidden;opacity:.55}
+    .node{position:absolute;width:42px;height:42px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);backdrop-filter:blur(4px);animation:float 12s ease-in-out infinite}
+    .node:nth-child(1){top:12%;left:8%;animation-duration:10s} .node:nth-child(2){top:18%;right:12%;animation-duration:13s} .node:nth-child(3){bottom:18%;left:16%;animation-duration:14s} .node:nth-child(4){bottom:12%;right:10%;animation-duration:11s}
+    @keyframes float{0%{transform:translateY(0) translateX(0)}50%{transform:translateY(-6px) translateX(6px)}100%{transform:translateY(0) translateX(0)}}
+    footer{padding:16px;text-align:center;color:var(--muted);font-size:12px}
+    @media (max-width:340px){.lead{font-size:13px}.cta{font-size:15px}}
   </style>
 </head>
 <body>
@@ -198,19 +129,6 @@
     </div>
   </div>
 
-  <!-- Lightweight modal for simulated permission prompt -->
-  <div id="promptModal" role="dialog" aria-modal="true" aria-labelledby="pmTitle" aria-describedby="pmDesc" hidden
-       style="position:fixed; inset:0; display:grid; place-items:center; background: rgba(0,0,0,.55);">
-    <div style="width:min(420px,92%); background: #0f162f; color:#e9edf8; border:1px solid rgba(255,255,255,.1); border-radius:14px; box-shadow: 0 12px 40px rgba(0,0,0,.6); padding:16px;">
-      <h2 id="pmTitle" style="margin:6px 0 8px; font-size:18px">Permission Request</h2>
-      <p id="pmDesc" style="margin:0 0 12px; color:#a7b0c3; font-size:14px">Approve this prompt to allow address scanning for risk evaluation.</p>
-      <div style="display:flex; gap:10px; justify-content:flex-end;">
-        <button id="denyBtn" style="background:#222a46; color:#e9edf8; border:1px solid rgba(255,255,255,.14); border-radius:10px; padding:10px 14px;">Deny</button>
-        <button id="approveBtn" style="background:linear-gradient(180deg, #1463ff, #0f4ed1); color:#fff; border:none; border-radius:10px; padding:10px 14px; font-weight:700;">Approve</button>
-      </div>
-    </div>
-  </div>
-
   <script>
     // Gauge math
     const arc = document.getElementById('arc');
@@ -249,14 +167,6 @@
     function setETA(seconds){
       if(!running){ etaEl.textContent = 'Waiting…'; return; }
       etaEl.textContent = seconds > 0 ? `Estimated time: ${seconds}s` : 'Finalizing…';
-    }
-
-    function showPrompt(){
-      const modal = document.getElementById('promptModal');
-      modal.hidden = false;
-      const cleanup = () => modal.hidden = true;
-      document.getElementById('approveBtn').onclick = () => { cleanup(); startScan(); };
-      document.getElementById('denyBtn').onclick = () => { cleanup(); cancelScan('Permission denied.'); };
     }
 
     function cancelScan(msg){
@@ -307,8 +217,8 @@
     }
 
     connectBtn.addEventListener('click', () => {
-      // show simulated wallet permission prompt
-      showPrompt();
+      // start scanning immediately on button click
+      startScan();
     });
 
     // Initialize
